@@ -1,0 +1,73 @@
+{
+  "title": "Architecture-generality of the at-grok transient and the grok->compression lag",
+  "design": "One harness, free weight decay. arm A=MLP, B=canonical TF (LN-free), C=LayerNorm TF. A-vs-B isolates architecture; B-vs-C isolates LayerNorm.",
+  "claims": {
+    "transient": "at-grok/floor > TRANSIENT_THR == hazard present",
+    "lag": "lag/T_grok; > LARGE_LAG_THR == 'large' lag (paper MLP-clamp ~1.0)",
+    "floor_ordering": "Spearman(wd, floor); |rho|>MONO_THR monotone, <FLAT_THR flat"
+  },
+  "thresholds": {
+    "TRANSIENT_THR": 1.2,
+    "LARGE_LAG_THR": 0.4,
+    "MONO_THR": 0.7,
+    "FLAT_THR": 0.3,
+    "MIN_CELLS": 3
+  },
+  "primary_metric": "embedding squared-normalized effective rank",
+  "config": {
+    "p": 59,
+    "train_frac": 0.3,
+    "seeds": 2,
+    "wd_mlp": [
+      0.5,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "wd_tf": [
+      1.0,
+      1.5,
+      2.0,
+      3.0
+    ],
+    "d_model": 128,
+    "mlp_hidden": 256,
+    "n_heads": 4,
+    "d_mlp_mult": 4,
+    "lr": 0.001,
+    "betas": [
+      0.9,
+      0.98
+    ],
+    "max_steps": 60000,
+    "dense_every": 250,
+    "n_geom_logpts": 60,
+    "grok_thr": 0.9,
+    "mem_thr": 0.99,
+    "floor_frac": 0.1,
+    "plateau_tol": 0.05,
+    "early_stop": true,
+    "plateau_window": 8000,
+    "plateau_rel": 0.02,
+    "ckpt_every": 2000,
+    "n_spectra_milestones": 20,
+    "TRANSIENT_THR": 1.2,
+    "LARGE_LAG_THR": 0.4,
+    "MONO_THR": 0.7,
+    "FLAT_THR": 0.3,
+    "MIN_CELLS": 3,
+    "base": "output",
+    "project_prefix": "arch_generality_audit",
+    "device": "auto",
+    "seed_base": 1234,
+    "smoke": false,
+    "resume": false,
+    "arms": [
+      "mlp",
+      "tf_lnfree",
+      "tf_ln"
+    ]
+  },
+  "config_hash": "f020134d6508",
+  "written": "2026-06-21 09:30:12"
+}

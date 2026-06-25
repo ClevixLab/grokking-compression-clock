@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+title: "At-Grok Is Not Converged: A Measurement-Validity Audit for Grokking Representation Metrics"
+message: "If you use this software or its findings, please cite the paper below."
+type: software
+authors:
+  - given-names: "Xuan Khanh"
+    family-names: "Truong"
+    email: khanh@clevix.vn
+    affiliation: "H&K Research Studio / Clevix LLC"
+  - given-names: "Duc Trung"
+    family-names: "Luu"
+    affiliation: "H&K Research Studio / Clevix LLC"
+repository-code: "https://github.com/ClevixLab/grokking-compression-clock"
+abstract: >-
+  A measurement-validity audit for grokking representation metrics. The embedding
+  effective rank read at the generalization transition can be a transient that long
+  training drives to a low-rank floor, so a snapshot taken at grokking does not
+  describe the converged solution. This repository provides the audit, an adversarial
+  test suite, processed trajectories, and a one-command pipeline that reproduces every
+  table, number, and figure in the paper.
+keywords:
+  - grokking
+  - generalization
+  - effective rank
+  - measurement validity
+  - reproducibility
+license: MIT
+preferred-citation:
+  type: article
+  title: "At-Grok Is Not Converged: A Measurement-Validity Audit for Grokking Representation Metrics"
+  authors:
+    - given-names: "Xuan Khanh"
+      family-names: "Truong"
+    - given-names: "Duc Trung"
+      family-names: "Luu"
+  year: 2026
+  # arXiv identifier to be added once assigned:
+  # journal: "arXiv preprint"
+  # url: "https://arxiv.org/abs/XXXX.XXXXX"

@@ -1,0 +1,20 @@
+{
+  "title": "Is embedding scale invariance the mechanism that defers compression?",
+  "design": "Control arm tf_rms = canonical LN-free transformer + RMS-normalization on the embedding INPUT ONLY (per-token scale invariance; no mean-centering, no affine gain, no per-sublayer norm). It shares LayerNorm's scale invariance and nothing else. Compared against arms tf_lnfree (canonical), mlp, tf_ln (LayerNorm) from the same harness.",
+  "hypothesis": "Embedding scale invariance is what lets the network reach correct predictions while the embedding is still high-rank, deferring compression to a later, norm-driven phase.",
+  "predictions": {
+    "PD1_deferral": "concentration completed by grok (frac-pre) < PD1_THR. Reference free-run values: canonical 0.75, LayerNorm 0.08.",
+    "PD2_norm_driven": "post-grok Spearman(global_norm, embedding rank) < PD2_THR. Reference: canonical +0.70, LayerNorm -0.79.",
+    "PD3_fourier": "top-k embedding DFT frequencies carry > PD3_THR of the power (the compression lands on Fourier modes)."
+  },
+  "thresholds": {
+    "PD1_THR": 0.40,
+    "PD2_THR": -0.30,
+    "PD3_THR": 0.50,
+    "top_k": 5
+  },
+  "acceptance_rule": "The scale-invariance account is ACCEPTED iff PD1 AND PD2 both hold for the tf_rms control. PD3 is a descriptive check on what compression lands on, not part of the accept/reject rule.",
+  "primary_metric": "embedding squared-normalized effective rank",
+  "frozen_before_run": true,
+  "note": "PD2 holding is necessary but, as the run showed, NOT sufficient (tf_rms can show a negative post-grok norm-rank coupling without deferring); the accept rule is PD1 AND PD2, and PD1 is the discriminating prediction."
+}
